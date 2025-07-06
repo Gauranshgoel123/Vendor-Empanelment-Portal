@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,8 +5,12 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Separator } from "@/components/ui/separator";
+import demo_profile_image from "../../public/download.png"
+
 import { 
   Building2, 
+  Lock,
   FileText, 
   Clock, 
   CheckCircle, 
@@ -77,6 +80,8 @@ const VendorDashboard = ({ user, onLogout }) => {
     setActiveTab('new-application');
   };
 
+
+  console.log(user);
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -294,40 +299,74 @@ const VendorDashboard = ({ user, onLogout }) => {
               <CardHeader>
                 <CardTitle>Vendor Profile</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Company Name</label>
-                      <p className="text-lg font-semibold">{user.name}</p>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Unique ID</label>
-                      <p className="text-lg font-semibold">{user.uniqueId || 'VND123456'}</p>
-                    </div>
+              <CardContent className="space-y-6">
+                {/* Image + Name */}
+                <div className="flex items-center gap-6">
+                  <img
+                    src={user.image || demo_profile_image } 
+                    alt="Vendor Logo"
+                    className="w-24 h-24 rounded-full border shadow object-cover"
+                  />
+                  <div>
+                    <p className="text-2xl font-semibold">{user.name}</p>
+                    <p className="text-muted-foreground text-sm">{user.email}</p>
                   </div>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Email</label>
-                      <p>{user.email}</p>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Registration Date</label>
-                      <p>January 1, 2024</p>
-                    </div>
-                  </div>
-                  
-                  <Alert>
-                    <AlertDescription>
-                      Critical details like PAN and GSTIN cannot be modified after registration. 
-                      Contact DMRC support for any changes to these details.
-                    </AlertDescription>
-                  </Alert>
                 </div>
+                <Separator />
+                {/* Info Grid */}
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">Company Name</label>
+                    <p className="text-lg font-semibold">{user.name}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">Unique ID</label>
+                    <p className="text-lg font-semibold">{user.uniqueId || "VND123456"}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">Email</label>
+                    <p>{user.email}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-muted-foreground">Registration Date</label>
+                    <p>January 1, 2024</p>
+                  </div>
+                </div>
+
+                <Separator />
+
+                {/* PAN & GSTIN Section */}
+                <div className="grid grid-cols-2 gap-6">
+                  <div>
+                    <label className="text-sm font-medium flex items-center gap-1 text-muted-foreground">
+                      PAN
+                      <Badge variant="outline" className="text-xs flex items-center gap-1">
+                        <Lock size={12} /> Locked
+                      </Badge>
+                    </label>
+                    <p>{user.pan || "ABCDE1234F"}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium flex items-center gap-1 text-muted-foreground">
+                      GSTIN
+                      <Badge variant="outline" className="text-xs flex items-center gap-1">
+                        <Lock size={12} /> Locked
+                      </Badge>
+                    </label>
+                    <p>{user.gstin || "22AAAAA0000A1Z5"}</p>
+                  </div>
+                </div>
+
+                <Alert>
+                  <AlertDescription>
+                    <span className="font-medium">Note:</span> PAN and GSTIN are critical identifiers and cannot be modified after registration. Please contact <span className="font-semibold">DMRC Support</span> for any corrections.
+                  </AlertDescription>
+                </Alert>
+
               </CardContent>
             </Card>
           </TabsContent>
+
         </Tabs>
       </div>
     </div>
