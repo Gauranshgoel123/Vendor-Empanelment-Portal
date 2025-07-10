@@ -303,7 +303,7 @@ const VendorDashboard = ({ user, onLogout }) => {
                 {/* Image + Name */}
                 <div className="flex items-center gap-6">
                   <img
-                    src={user.image || demo_profile_image } 
+                    src={user.image || demo_profile_image} 
                     alt="Vendor Logo"
                     className="w-24 h-24 rounded-full border shadow object-cover"
                   />
