@@ -10,11 +10,12 @@ app.use(express.json());
 // Enable CORS (important for frontend integration)
 app.use(cors());
 
-// Import routes
+// Import and register routes
 const userRoutes = require("./routes/userRoutes");
-
-// Register routes
 app.use("/api/users", userRoutes);
+
+const authRoutes = require("./routes/authRoutes");
+app.use("/api/auth", authRoutes);
 
 // Default route
 app.get("/", (req, res) => res.send("API is running..."));
